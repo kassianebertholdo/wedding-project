@@ -1,0 +1,458 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{{ couple }}
+{% endblock %}
+
+
+{% block extra_css %}
+
+<style>
+
+.hero{
+
+    height:80vh;
+
+    background-image:
+    linear-gradient(
+        rgba(0,0,0,0.4),
+        rgba(0,0,0,0.4)
+    ),
+    url('{{ couple.cover_image.url }}');
+
+    background-size:cover;
+    background-position:center;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    text-align:center;
+    color:white;
+
+    border-radius:20px;
+
+    margin-top:30px;
+}
+
+.hero-content h1{
+
+    font-size:5rem;
+}
+
+.hero-content p{
+
+    font-size:1.5rem;
+    margin-top:20px;
+}
+
+.story{
+
+    margin-top:80px;
+
+    background:white;
+
+    padding:50px;
+
+    border-radius:20px;
+
+    box-shadow:
+    0 10px 20px rgba(0,0,0,0.1);
+}
+
+.story h2{
+
+    color:#d63384;
+    margin-bottom:20px;
+}
+
+.countdown{
+
+    margin-top:60px;
+
+    text-align:center;
+
+    background:white;
+
+    padding:40px;
+
+    border-radius:20px;
+
+    box-shadow:
+    0 10px 20px rgba(0,0,0,0.1);
+}
+
+.countdown h2{
+
+    color:#d63384;
+    margin-bottom:20px;
+}
+
+#countdown{
+
+    font-size:2rem;
+    font-weight:bold;
+}
+
+.gifts{
+
+    margin-top:80px;
+}
+
+.gifts h2{
+
+    text-align:center;
+    color:#d63384;
+    margin-bottom:40px;
+}
+
+.gifts-grid{
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(auto-fit,minmax(280px,1fr));
+
+    gap:30px;
+}
+
+.card{
+
+    background:white;
+
+    border-radius:20px;
+
+    overflow:hidden;
+
+    box-shadow:
+    0 10px 20px rgba(0,0,0,0.1);
+}
+
+.card img{
+
+    width:100%;
+    height:250px;
+
+    object-fit:contain;
+
+    background:#fff;
+
+    padding:10px;
+}
+
+.card-content{
+
+    padding:20px;
+}
+
+.card-content h3{
+
+    color:#d63384;
+}
+
+.btn{
+
+    display:block;
+
+    margin-top:20px;
+
+    text-align:center;
+
+    background:#d63384;
+
+    color:white;
+
+    padding:12px;
+
+    border-radius:10px;
+
+    text-decoration:none;
+}
+
+.reserved{
+
+    background:#6c757d;
+}
+
+.gallery{
+
+    margin-top:80px;
+}
+
+.gallery h2{
+
+    text-align:center;
+
+    color:#d63384;
+
+    margin-bottom:30px;
+}
+
+.gallery-grid{
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(auto-fit,minmax(250px,1fr));
+
+    gap:20px;
+}
+
+.gallery-grid img{
+
+    width:100%;
+
+    height:250px;
+
+    object-fit:cover;
+
+    border-radius:20px;
+
+    box-shadow:
+    0 10px 20px rgba(0,0,0,0.1);
+}
+
+.pix-section{
+
+    margin-top:80px;
+}
+
+.pix-section h2{
+
+    text-align:center;
+
+    color:#d63384;
+
+    margin-bottom:30px;
+}
+
+.pix-card{
+
+    background:white;
+
+    padding:40px;
+
+    border-radius:20px;
+
+    text-align:center;
+
+    box-shadow:
+    0 10px 20px rgba(0,0,0,0.1);
+}
+
+.pix-card h3{
+
+    margin:20px 0;
+
+    color:#d63384;
+}
+
+.pix-qrcode{
+
+    width:250px;
+
+    margin-top:30px;
+
+    border-radius:20px;
+
+    box-shadow:
+    0 10px 20px rgba(0,0,0,0.1);
+}
+
+</style>
+
+{% endblock %}
+
+
+{% block content %}
+
+<section class="hero">
+
+    <div class="hero-content">
+
+        <h1>
+            {{ couple.bride_name }}
+            &
+            {{ couple.groom_name }}
+        </h1>
+
+        <p>
+            💍 Nosso grande dia:
+            {{ couple.wedding_date }}
+        </p>
+
+    </div>
+
+</section>
+
+
+<section class="story">
+
+    <h2>
+        Nossa História ❤️
+    </h2>
+
+    <p>
+        {{ couple.story }}
+    </p>
+
+</section>
+
+
+<section class="countdown">
+
+    <h2>
+        ⏳ Contagem Regressiva
+    </h2>
+
+    <div id="countdown"></div>
+
+</section>
+
+
+<section class="gifts">
+
+    <h2>
+        🎁 Lista de Presentes
+    </h2>
+
+    <div class="gifts-grid">
+
+        {% for gift in gifts %}
+
+            <div class="card">
+
+                {% if gift.image %}
+
+                    <img
+                        src="{{ gift.image.url }}"
+                    >
+
+                {% endif %}
+
+                <div class="card-content">
+
+                    <h3>
+                        {{ gift.name }}
+                    </h3>
+
+                    <p>
+                        R$ {{ gift.price }}
+                    </p>
+                    {% if gift.purchase_link %}
+
+    <a
+        href="{{ gift.purchase_link }}"
+        target="_blank"
+        class="btn"
+    >
+        Comprar presente 🛒
+    </a>
+
+{% endif %}
+
+                    {% if gift.reserved %}
+
+                        <div class="btn reserved">
+                            Reservado ✅
+                        </div>
+
+                    {% else %}
+
+                        <a
+                            href="{% url 'reserve_gift' gift.id %}"
+                            class="btn"
+                        >
+                            Reservar presente
+                        </a>
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+        {% endfor %}
+
+    </div>
+
+</section>
+
+
+<section class="gallery">
+
+    <h2>
+        📸 Nossa Galeria
+    </h2>
+
+    <div class="gallery-grid">
+
+        {% for photo in couple.photos.all %}
+
+            <img
+                src="{{ photo.image.url }}"
+            >
+
+        {% endfor %}
+
+    </div>
+
+</section>
+
+
+<section class="pix-section">
+
+    <h2>
+        💸 PIX
+    </h2>
+
+    {% if couple.pix_qrcode %}
+
+        <div class="pix-card">
+
+            <img
+                src="{{ couple.pix_qrcode.url }}"
+                class="pix-qrcode"
+            >
+
+            <h3>
+                Chave PIX
+            </h3>
+
+            <p>
+                {{ couple.pix_key }}
+            </p>
+
+        </div>
+
+    {% endif %}
+
+</section>
+
+
+<script>
+
+const weddingDate = new Date(
+    "{{ couple.wedding_date|date:'Y-m-d' }}"
+).getTime();
+
+const countdown = setInterval(function() {
+
+    const now = new Date().getTime();
+
+    const distance = weddingDate - now;
+
+    const days = Math.floor(
+        distance / (1000 * 60 * 60 * 24)
+    );
+
+    document.getElementById(
+        "countdown"
+    ).innerHTML =
+        days + " dias para o casamento 💍";
+
+}, 1000);
+
+</script>
+
+{% endblock %}

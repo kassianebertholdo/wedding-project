@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Login
+{% endblock %}
+
+
+{% block extra_css %}
+
+<style>
+
+.login-card{
+    background:white;
+    padding:40px;
+    border-radius:20px;
+
+    width:400px;
+
+    margin:80px auto;
+
+    box-shadow:
+    0 10px 20px rgba(0,0,0,0.1);
+}
+
+.login-card h1{
+    color:#d63384;
+    margin-bottom:20px;
+}
+
+input{
+    width:100%;
+    padding:12px;
+    margin-top:10px;
+    margin-bottom:20px;
+}
+
+button{
+    width:100%;
+    padding:12px;
+
+    background:#d63384;
+
+    color:white;
+
+    border:none;
+
+    border-radius:10px;
+}
+
+</style>
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="login-card">
+
+    <h1>Entrar</h1>
+
+    <form method="POST">
+
+        {% csrf_token %}
+
+        {{ form.as_p }}
+
+        <button type="submit">
+            Login
+        </button>
+
+    </form>
+
+</div>
+
+{% endblock %}

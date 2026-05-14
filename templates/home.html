@@ -1,0 +1,129 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Home
+{% endblock %}
+
+{% block extra_css %}
+
+<style>
+
+.hero{
+    text-align:center;
+    padding:80px 20px;
+    background:linear-gradient(
+        135deg,
+        #ffcad4,
+        #f4acb7
+    );
+    color:white;
+}
+
+.hero h1{
+    font-size:4rem;
+    margin-bottom:20px;
+}
+
+.hero p{
+    font-size:1.3rem;
+}
+
+.couples{
+
+    margin-top:60px;
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(auto-fit,minmax(300px,1fr));
+
+    gap:30px;
+}
+
+.card{
+    background:white;
+    border-radius:20px;
+    overflow:hidden;
+
+    box-shadow:
+    0 10px 20px rgba(0,0,0,0.1);
+}
+
+.card img{
+    width:100%;
+    height:300px;
+    object-fit:cover;
+}
+
+.card-content{
+    padding:20px;
+    text-align:center;
+}
+
+.card h2{
+    color:#d63384;
+}
+
+.btn{
+    display:inline-block;
+    margin-top:15px;
+    background:#d63384;
+    color:white;
+    padding:12px 20px;
+    border-radius:10px;
+    text-decoration:none;
+}
+
+</style>
+
+{% endblock %}
+
+
+{% block content %}
+
+<section class="hero">
+
+    <h1>💍 Wedding Wishes</h1>
+
+    <p>
+        Celebre o amor e participe
+        desse momento especial
+    </p>
+
+</section>
+
+
+<section class="couples">
+
+    {% for couple in couples %}
+
+        <div class="card">
+
+            <img
+            src="{{ couple.cover_image.url }}">
+
+            <div class="card-content">
+
+                <h2>
+                    {{ couple.bride_name }}
+                    &
+                    {{ couple.groom_name }}
+                </h2>
+
+                <a
+                href="/{{ couple.slug }}/"
+                class="btn">
+
+                    Ver casamento
+
+                </a>
+
+            </div>
+
+        </div>
+
+    {% endfor %}
+
+</section>
+
+{% endblock %}

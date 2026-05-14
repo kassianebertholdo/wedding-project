@@ -1,0 +1,169 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Dashboard
+{% endblock %}
+
+
+{% block extra_css %}
+
+<style>
+
+h1{
+    text-align:center;
+    margin-top:50px;
+    color:#d63384;
+}
+
+table{
+    width:100%;
+    margin-top:40px;
+    border-collapse:collapse;
+    background:white;
+    border-radius:20px;
+    overflow:hidden;
+}
+
+th, td{
+    padding:20px;
+    text-align:left;
+}
+
+th{
+    background:#d63384;
+    color:white;
+}
+
+tr:nth-child(even){
+    background:#f8f8f8;
+}
+.stats-grid{
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(auto-fit,minmax(220px,1fr));
+
+    gap:20px;
+
+    margin-top:40px;
+}
+
+.stat-card{
+
+    background:white;
+
+    padding:30px;
+
+    border-radius:20px;
+
+    text-align:center;
+
+    box-shadow:
+    0 10px 20px rgba(0,0,0,0.1);
+}
+
+.stat-card h2{
+
+    color:#d63384;
+
+    font-size:2rem;
+}
+</style>
+
+{% endblock %}
+
+
+{% block content %}
+
+<h1>
+    💍 Dashboard de
+    {{ couple }}
+</h1>
+<div class="stats-grid">
+
+    <div class="stat-card">
+
+        <h2>
+            🎁 {{ total_gifts }}
+        </h2>
+
+        <p>
+            Presentes
+        </p>
+
+    </div>
+
+    <div class="stat-card">
+
+        <h2>
+            ✅ {{ reserved_gifts }}
+        </h2>
+
+        <p>
+            Reservados
+        </p>
+
+    </div>
+
+    <div class="stat-card">
+
+        <h2>
+            🎉 {{ available_gifts }}
+        </h2>
+
+        <p>
+            Disponíveis
+        </p>
+
+    </div>
+
+    <div class="stat-card">
+
+        <h2>
+            💰 R$ {{ total_amount }}
+        </h2>
+
+        <p>
+            Arrecadado
+        </p>
+
+    </div>
+
+</div>
+<table>
+
+    <tr>
+        <th>Convidado</th>
+        <th>Presente</th>
+        <th>Valor</th>
+        <th>Data</th>
+    </tr>
+
+    {% for reservation in reservations %}
+
+        <tr>
+
+            <td>
+                {{ reservation.user.username }}
+            </td>
+
+            <td>
+                {{ reservation.gift.name }}
+            </td>
+
+            <td>
+                R$ {{ reservation.gift.price }}
+            </td>
+
+            <td>
+                {{ reservation.reserved_at }}
+            </td>
+
+        </tr>
+
+    {% endfor %}
+
+</table>
+
+{% endblock %}
